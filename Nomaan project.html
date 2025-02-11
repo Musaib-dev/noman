@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Special Question</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #fff5f8;
+            font-family: 'Helvetica', sans-serif;
+            transition: background 0.5s;
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+            transition: 0.3s;
+        }
+
+        h1 {
+            color: #ff6b6b;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            margin: 0 10px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        #yesBtn {
+            background-color: #ff6b6b;
+            color: white;
+        }
+
+        #noBtn {
+            background-color: #e0e0e0;
+            color: #666;
+            position: absolute;
+        }
+
+        .flower {
+            position: absolute;
+            font-size: 1.5rem;
+            opacity: 0;
+            animation: fall 3s linear forwards;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .message {
+            display: none;
+            font-size: 2rem;
+            color: #ff6b6b;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Will you be mine?</h1>
+        <button class="btn" id="yesBtn">Yes</button>
+        <button class="btn" id="noBtn">No</button>
+        <div class="message">💖 Thank you! You made my day! 💖</div>
+    </div>
+
+    <script>
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const container = document.querySelector('.container');
+        const message = document.querySelector('.message');
+
+        noBtn.addEventListener('mouseover', () => {
+            const containerRect = container.getBoundingClientRect();
+            const newX = Math.random() * (containerRect.width - noBtn.offsetWidth);
+            const newY = Math.random() * (containerRect.height - noBtn.offsetHeight);
+            
+            noBtn.style.left = `${newX}px`;
+            noBtn.style.top = `${newY}px`;
+        });
+
+        function createFlower() {
+            const flower = document.createElement('div');
+            flower.innerHTML = '🌸';
+            flower.className = 'flower';
+            flower.style.left = Math.random() * 100 + '%';
+            document.body.appendChild(flower);
+            
+            setTimeout(() => flower.remove(), 3000);
+        }
+
+        yesBtn.addEventListener('click', () => {
+            document.querySelectorAll('.btn').forEach(btn => btn.style.display = 'none');
+            document.querySelector('h1').style.display = 'none';
+            message.style.display = 'block';
+
+            // Flower rain effect
+            const flowerInterval = setInterval(createFlower, 100);
+            setTimeout(() => clearInterval(flowerInterval), 3000);
+        });
+    </script>
+</body>
+</html>
